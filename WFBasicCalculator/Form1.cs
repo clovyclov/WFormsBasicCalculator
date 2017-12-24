@@ -26,6 +26,7 @@ namespace WFBasicCalculator
         }
 
         #endregion
+
         #region Operator Methods
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace WFBasicCalculator
            
             //sendCursorToEnd();
 
-            //FocusInputText();
+            FocusInputText();
         }
         
         private void CButton_Click(object sender, EventArgs e)
@@ -92,6 +93,7 @@ namespace WFBasicCalculator
         }
 
         #endregion
+
         #region Number_Methods
 
         private void NineButton_Click(object sender, EventArgs e)
@@ -189,6 +191,9 @@ namespace WFBasicCalculator
             UserInputText.SelectionLength = 0;
         }
 
+        /// <summary>
+        /// Deletes the character to the right of the selection start.
+        /// </summary>
         public void DeleteTextValue()
         {
             var selectionStart = UserInputText.SelectionStart;
@@ -211,4 +216,5 @@ namespace WFBasicCalculator
 
         #endregion
     }
+
 }
