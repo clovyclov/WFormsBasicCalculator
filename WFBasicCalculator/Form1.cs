@@ -42,26 +42,30 @@ namespace WFBasicCalculator
         private void DivideButton_Click(object sender, EventArgs e)
         {
             InsertTextValue("/");
+            sendCursorToEnd();
         }
 
         private void TimesButton_Click(object sender, EventArgs e)
         {
             InsertTextValue("*");
+            sendCursorToEnd();
         }
 
         private void MinusButton_Click(object sender, EventArgs e)
         {
             InsertTextValue("-");
+            sendCursorToEnd();
         }
 
         private void AddButton_Click(object sender, EventArgs e)
         { 
             InsertTextValue("+");
+            sendCursorToEnd();
         }
 
         private void EqualsButton_Click(object sender, EventArgs e)
         {
-            InsertTextValue("=");
+            CalculateEquation();
         }
 
         #endregion
@@ -71,6 +75,15 @@ namespace WFBasicCalculator
         private void DelButton_Click(object sender, EventArgs e)
         {
 
+            DeleteTextValue();
+            //if (UserInputText.Text.Length >= UserInputText.SelectionStart + 1)
+            //    return;
+            
+            //this.UserInputText.Text = this.UserInputText.Text.Remove(UserInputText.SelectionStart - 1, 1);
+           
+            //sendCursorToEnd();
+
+            //FocusInputText();
         }
         
         private void CButton_Click(object sender, EventArgs e)
@@ -84,61 +97,51 @@ namespace WFBasicCalculator
         private void NineButton_Click(object sender, EventArgs e)
         {
             InsertTextValue("9");
-            sendCursorToEnd();
         }
 
         private void SixButton_Click(object sender, EventArgs e)
         {
             InsertTextValue("6");
-            sendCursorToEnd();
         }
 
         private void ThreeButton_Click(object sender, EventArgs e)
         {
             InsertTextValue("3");
-            sendCursorToEnd();
         }
 
         private void PeriodButton_Click(object sender, EventArgs e)
         {
             InsertTextValue(".");
-            sendCursorToEnd();
         }
 
         private void EightButton_Click(object sender, EventArgs e)
         {
             InsertTextValue("8");
-            sendCursorToEnd();
         }
 
         private void FiveButton_Click(object sender, EventArgs e)
         {
             InsertTextValue("5");
-            sendCursorToEnd();
         }
 
         private void TwoButton_Click(object sender, EventArgs e)
         {
             InsertTextValue("2");
-            sendCursorToEnd();
         }
 
         private void ZeroButton_Click(object sender, EventArgs e)
         {
             InsertTextValue("0");
-            sendCursorToEnd();
         }
 
         private void SevenButton_Click(object sender, EventArgs e)
         {
             InsertTextValue("7");
-            sendCursorToEnd();
         }
 
         private void FourButton_Click(object sender, EventArgs e)
         {
             InsertTextValue("4");
-            sendCursorToEnd();
         }
 
         private void OneButton_Click(object sender, EventArgs e)
@@ -147,6 +150,14 @@ namespace WFBasicCalculator
         }
 
         #endregion
+
+        /// <summary>
+        /// Calculates the given equation and outputs the answer to the user label
+        /// </summary>
+        private void CalculateEquation()
+        {
+
+        }
 
         #region Private_Helpers
 
@@ -163,14 +174,39 @@ namespace WFBasicCalculator
         /// </summary>
         /// <param name="numValue"></param>
         /// <returns></returns>
-        private string InsertTextValue(string numValue)
+        private void InsertTextValue(string numValue)
         {
-            return this.UserInputText.Text = this.UserInputText.Text.Insert(UserInputText.SelectionStart, numValue);
+            //Remember selection start
+            var selectionStart = UserInputText.SelectionStart;
+
+            //Set new text
+            UserInputText.Text = UserInputText.Text.Insert(UserInputText.SelectionStart, numValue);
+
+            //Restore the selection start
+            this.UserInputText.SelectionStart = selectionStart + numValue.Length;
+
+            //Set selection length to 0
+            UserInputText.SelectionLength = 0;
+        }
+
+        public void DeleteTextValue()
+        {
+            var selectionStart = UserInputText.SelectionStart;
+
+            if (UserInputText.SelectionStart <= 0)
+                return;
+
+            UserInputText.Text = UserInputText.Text.Remove(UserInputText.SelectionStart - 1, 1);
+
+            UserInputText.SelectionStart = selectionStart - 1;
         }
 
         private void sendCursorToEnd()
         {
             UserInputText.SelectionStart = UserInputText.Text.Length + 1;
+
+            if (UserInputText.Text.Length >= UserInputText.SelectionStart + 1);
+
         }
 
         #endregion
