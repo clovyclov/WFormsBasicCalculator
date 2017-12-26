@@ -159,6 +159,70 @@ namespace WFBasicCalculator
         private void CalculateEquation()
         {
 
+            CalculationResultsText.Text = ParseOperation();
+        }
+
+        /// <summary>
+        /// Parses the user's equation and calculates the result
+        /// </summary>
+        /// <returns></returns>
+        private string ParseOperation()
+        {
+            try
+            {
+                //Get the user's equation input
+                var userInput = UserInputText.Text;
+
+                //Remove all spaces
+                userInput = userInput.Replace(" ", "");
+
+                //Creates a new top-level operation
+                var operation = new Operation();  
+                var leftSide = true;
+                string theLeft = "";
+
+                //Loops through each character of the input text
+                for(var i = 0; i < userInput.Length; i++)
+                {
+                    //MessageBox.Show(userInput[i].ToString());
+
+                    //if( userInput[i].ToString() == "+")
+                    //{
+                    //    break;
+                    //}
+
+                    var myString = "0123456789.";
+
+                    if ( myString.Any(c => userInput[i] == c))
+                    {
+                        if(leftSide)
+                            operation.LeftSide = AddNumberPart(operation.LeftSide, userInput[i]);
+                    }
+                }
+
+                MessageBox.Show(theLeft);
+
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                return $"Invalid equation. {ex.Message}";
+            }
+        }
+
+        /// <summary>
+        /// Attempts to add a new character to the current number, checking for valid characters as it goes
+        /// </summary>
+        /// <param name="currentNumber">The current number string</param>
+        /// <param name="currentCharacter">The new character to append to the string</param>
+        /// <returns></returns>
+        private string AddNumberPart(string currentNumber, char newCharacter)
+        {
+            // Check if there is already a . in the number
+            if (currentNumber.Contains('.') && newCharacter == '.')
+                throw new InvalidOperationException($"Number {currentNumber} already contains a . and another cannot be added");
+
+            return currentNumber + newCharacter;
         }
 
         #region Private_Helpers

@@ -37,7 +37,7 @@ namespace WFBasicCalculator
         public Operation()
         {
             //Create empty strings instead of having nulls
-            LeftSide = ""
+            LeftSide = "";
             RightSide = "";
         }
 
